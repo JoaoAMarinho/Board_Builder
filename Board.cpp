@@ -23,7 +23,7 @@ vector<vector<char>> Board::getBoard() { return board; }
 void Board::addCharToBoard(int line, int column, char character) { board[line][column] = character; }
 
 void Board::Draw() {
-    setcolor(112);
+    setcolor(112);                             //Set the background colour to white just to differenciate the board and the limits
     cout << " ";
     for (int i = 0; i < columns; i++)
     {
