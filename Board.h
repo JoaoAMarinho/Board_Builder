@@ -1,12 +1,10 @@
 #pragma once
 #include "Component.h"
 #include "Utilities.h"
-#include <iostream>
 #include <sstream>
 #include <vector>
-#include <string>
 
-using namespace std;
+
 
 class Board
 {

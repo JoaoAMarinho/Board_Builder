@@ -92,6 +92,5 @@ void Quit(Board* board)
     boardFile << board->getBoardFile();
     boardFile.close();
     clrscr();
-    cout << "\nBye\n";
 }
 

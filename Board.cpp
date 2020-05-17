@@ -1,16 +1,27 @@
 #include "Board.h"
 
 Board::Board() { lines = 0; columns = 0; setBoardSize();}
+
 Board::Board(int lines, int columns) { this->lines = lines; this->columns = columns; setBoardSize(); }
+
 void Board::setLines(int lines){ this->lines = lines; }
+
 void Board::setColumns(int columns){ this->columns = columns; }
+
 void Board::setBoardSize() { vector<vector<char>> v(lines, vector<char>(columns, ' ')); board = v; }
+
 void Board::addStrBoardFile(string str) { board_file += str + '\n'; }
+
 int Board::getLines() { return lines; }
+
 int Board::getColumns() { return columns; }
+
 string Board::getBoardFile() { return board_file; }
+
 vector<vector<char>> Board::getBoard() { return board; }
+
 void Board::addCharToBoard(int line, int column, char character) { board[line][column] = character; }
+
 void Board::Draw() {
     setcolor(112);
     cout << " ";
@@ -32,6 +43,7 @@ void Board::Draw() {
         cout << endl;
     }
 }
+
 bool Board::addWords(Component* component) {
     bool validInput = true;
     while (true)
@@ -129,11 +141,12 @@ bool Board::addWords(Component* component) {
     }
 
 }
+
 bool Board::fitsInBoard(Component* component)
 {
     if (component->getOrientation() == 'H')
     {
-        if (component->getWord().size() + component->getColumn() <= columns)
+        if (component->getWord().size() + component->getColumn() <= (size_t)columns)
         {
             return true;
         }
@@ -144,7 +157,7 @@ bool Board::fitsInBoard(Component* component)
     }
     else
     {
-        if (component->getWord().size() + component->getLine() <= lines)
+        if (component->getWord().size() + component->getLine() <= (size_t)lines)
         {
             return true;
         }
@@ -155,11 +168,12 @@ bool Board::fitsInBoard(Component* component)
     }
 
 }
+
 bool Board::sameChar(Component* component)
 {
     if (component->getOrientation() == 'H')
     {
-        for (int i = 0; i < component->getWord().size(); i++)
+        for (int i = 0; i < (int)component->getWord().size(); i++)
         {
             if (board[component->getLine()][component->getColumn() + i] == ' ')
             {
@@ -177,7 +191,7 @@ bool Board::sameChar(Component* component)
     }
     else
     {
-        for (int i = 0; i < component->getWord().size(); i++)
+        for (int i = 0; i < (int)component->getWord().size(); i++)
         {
             if (board[component->getLine() + i][component->getColumn()] == ' ')
             {
@@ -195,6 +209,7 @@ bool Board::sameChar(Component* component)
     }
     return true;
 }
+
 bool Board::rightInsertion(Component* component)
 {
     if (component->getOrientation() == 'H')
@@ -205,20 +220,20 @@ bool Board::rightInsertion(Component* component)
             line += board[component->getLine()][i];
         }
         string newLine = line;
-        for (int i = 0; i < component->getWord().size(); i++)
+        for (int i = 0; i < (int)component->getWord().size(); i++)
         {
             newLine[component->getColumn() + i] = component->getWord()[i];
         }
         if (line == newLine)
         {
-            cout << "The word you want to insert is already in that position or is part of an existing board word.\n\n";
+            //cout << "The word you want to insert is already in that position or is part of an existing board word.\n\n";
             return false;
         }
         else
         {
             istringstream iss1(line);
             vector<string> words1;   //Words from the original line
-            for (int i = 0; i < line.size(); i++)
+            for (int i = 0; i < (int)line.size(); i++)
             {
                 string str;
                 iss1 >> str;
@@ -233,7 +248,7 @@ bool Board::rightInsertion(Component* component)
             }
             istringstream iss2(newLine);
             vector<string> words2;   //Words from the modified line
-            for (int i = 0; i < newLine.size(); i++)
+            for (int i = 0; i < (int)newLine.size(); i++)
             {
                 string str;
                 iss2 >> str;
@@ -248,11 +263,10 @@ bool Board::rightInsertion(Component* component)
             }
             if (words1.size() == words2.size() || words1.size() > words2.size())
             {
-                cout << "The word can not be inserted in the board.\n\n";
                 return false;
             }
             vector<Component> components;
-            for (int i = 0; i < component->getWord().size(); i++)
+            for (int i = 0; i < (int)component->getWord().size(); i++)
             {
                 string above = "", under = "";
                 if (board[component->getLine()][component->getColumn() + i] == ' ') //If the board is empty on that house we will check the above and lower lines of that column
@@ -266,7 +280,6 @@ bool Board::rightInsertion(Component* component)
                             {
                                 if (board[component->getLine() - 2][component->getColumn() + i] != ' ')  //If there is a word above that position then we will not insert the word
                                 {
-                                    cout << "The word can not be inserted in the board.\n\n";
                                     return false;
                                 }
                             }
@@ -279,9 +292,8 @@ bool Board::rightInsertion(Component* component)
                             under = board[component->getLine() + 1][component->getColumn() + i];
                             if (component->getLine() + 2 < lines)   //If the house 2 lines under is valid
                             {
-                                if (board[component->getLine() + 2][component->getColumn() + i] != ' ')
+                                if (board[component->getLine() + 2][component->getColumn() + i] != ' ')   //If there is a word under that position then we will not insert the word
                                 {
-                                    cout << "The word can not be inserted in the board.\n\n";  //If there is a word under that position then we will not insert the word
                                     return false;
                                 }
                             }
@@ -314,14 +326,13 @@ bool Board::rightInsertion(Component* component)
                         }
                         else
                         {
-                            cout << "The word can not be inserted in the board.\n\n";  //If the word created by the insertion of that word is not in the dictionary, we will not insert that word
-                            return false;
+                            return false;       //If the word created by the insertion of that word is not in the dictionary, we will not insert that word
                         }
                     }
                 }
             }
             //If the word can be inserted without destroying the existing ones we will see if there are new words formed and ask if he wants to add them
-            for (int i = 0; i < components.size(); i++)
+            for (int i = 0; i < (int)components.size(); i++)
             {
                 cout << "If you insert the word in this position you will form a new one ('" << components[i].getWord() << "').\n";
             }
@@ -342,11 +353,11 @@ bool Board::rightInsertion(Component* component)
                 }
                 else if (input == "yes")
                 {
-                    for (int i = 0; i < components.size(); i++)
+                    for (int i = 0; i < (int)components.size(); i++)
                     {
                         addStrBoardFile(components[i].getToFile());
                     }
-                    for (int i = 0; i < component->getWord().size(); i++)
+                    for (int i = 0; i < (int)component->getWord().size(); i++)
                     {
                         addCharToBoard(component->getLine(), component->getColumn() + i, component->getWord()[i]);
                     }
@@ -363,7 +374,7 @@ bool Board::rightInsertion(Component* component)
                     cout << "Invalid input.\n";
                 }
             }
-            for (int i = 0; i < component->getWord().size(); i++)
+            for (int i = 0; i < (int)component->getWord().size(); i++)
             {
                 addCharToBoard(component->getLine(), component->getColumn() + i, component->getWord()[i]);
             }
@@ -378,20 +389,20 @@ bool Board::rightInsertion(Component* component)
             column += board[i][component->getColumn()];
         }
         string newColumn = column;
-        for (int i = 0; i < component->getWord().size(); i++)
+        for (int i = 0; i < (int)component->getWord().size(); i++)
         {
             newColumn[component->getLine() + i] = component->getWord()[i];
         }
         if (column == newColumn)
         {
-            cout << "The word you want to insert is already in that position or is part of an existing board word.\n\n";
+            //cout << "The word you want to insert is already in that position or is part of an existing board word.\n\n";
             return false;
         }
         else
         {
             istringstream iss1(column);
             vector<string> words1;   //Words from the original column
-            for (int i = 0; i < column.size(); i++)
+            for (int i = 0; i < (int)column.size(); i++)
             {
                 string str;
                 iss1 >> str;
@@ -406,7 +417,7 @@ bool Board::rightInsertion(Component* component)
             }
             istringstream iss2(newColumn);
             vector<string> words2;   //Words from the modified column
-            for (int i = 0; i < newColumn.size(); i++)
+            for (int i = 0; i < (int)newColumn.size(); i++)
             {
                 string str;
                 iss2 >> str;
@@ -421,11 +432,10 @@ bool Board::rightInsertion(Component* component)
             }
             if (words1.size() == words2.size() || words1.size() > words2.size())
             {
-                cout << "The word can not be inserted in the board.\n\n";
                 return false;
             }
             vector<Component> components;
-            for (int i = 0; i < component->getWord().size(); i++)
+            for (int i = 0; i < (int)component->getWord().size(); i++)
             {
                 string left = "", right = "";
                 if (board[component->getLine() + i][component->getColumn()] == ' ') //If the board is empty on that house we will check the left and right column of that line
@@ -439,7 +449,6 @@ bool Board::rightInsertion(Component* component)
                             {
                                 if (board[component->getLine() + i][component->getColumn() - 2] != ' ')  //If there is a word left of that position then we will not insert the word
                                 {
-                                    cout << "The word can not be inserted in the board.\n\n";
                                     return false;
                                 }
                             }
@@ -454,8 +463,7 @@ bool Board::rightInsertion(Component* component)
                             {
                                 if (board[component->getLine() + i][component->getColumn() + 2] != ' ')
                                 {
-                                    cout << "The word can not be inserted in the board.\n\n";  //If there is a word right of that position then we will not insert the word
-                                    return false;
+                                    return false;        //If there is a word right of that position then we will not insert the word
                                 }
                             }
 
@@ -465,7 +473,7 @@ bool Board::rightInsertion(Component* component)
                     if (left != "" || right != "")
                     {
                         string newWord = left + component->getWord()[i] + right;
-                        if (inDict(newWord)) //If there is a new word created we will save it to the "components" vector
+                        if (inDict(newWord))   //If there is a new word created we will save it to the "components" vector
                         {
                             Component newComponent;
                             newComponent.setOrientation('H');
@@ -487,14 +495,13 @@ bool Board::rightInsertion(Component* component)
                         }
                         else
                         {
-                            cout << "The word can not be inserted in the board.\n\n";  //If the word created by the insertion of that word is not in the dictionary, we will not insert that word
-                            return false;
+                            return false;         //If the word created by the insertion of that word is not in the dictionary, we will not insert that word
                         }
                     }
                 }
             }
             //If the word can be inserted without destroying the existing ones we will see if there are new words formed and ask if he wants to add them
-            for (int i = 0; i < components.size(); i++)
+            for (int i = 0; i < (int)components.size(); i++)
             {
                 cout << "If you insert the word in this position you will form a new one ('" << components[i].getWord() << "').\n";
             }
@@ -515,11 +522,11 @@ bool Board::rightInsertion(Component* component)
                 }
                 else if (input == "yes")
                 {
-                    for (int i = 0; i < components.size(); i++)
+                    for (int i = 0; i < (int)components.size(); i++)
                     {
                         addStrBoardFile(components[i].getToFile());
                     }
-                    for (int i = 0; i < component->getWord().size(); i++)
+                    for (int i = 0; i < (int)component->getWord().size(); i++)
                     {
                         addCharToBoard(component->getLine() + i, component->getColumn(), component->getWord()[i]);
                     }
@@ -536,7 +543,7 @@ bool Board::rightInsertion(Component* component)
                     cout << "Invalid input.\n";
                 }
             }
-            for (int i = 0; i < component->getWord().size(); i++)
+            for (int i = 0; i < (int)component->getWord().size(); i++)
             {
                 addCharToBoard(component->getLine() + i, component->getColumn(), component->getWord()[i]);
             }

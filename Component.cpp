@@ -1,16 +1,27 @@
 #include "Component.h"
 
 Component::Component() { line = -1; column = -1; orientation = ' '; word = ""; toFile = ""; }
+
 void Component::setLine(int line) { this->line = line; }
+
 void Component::setColumn(int column) { this->column = column; }
+
 void Component::setOrientation(char orientation) { this->orientation = orientation; }
+
 void Component::setWord(string word) { this->word = word; }
+
 void Component::setToFile(string toFile) { this->toFile = toFile; }
+
 int Component::getLine() { return line; }
+
 int Component::getColumn() { return column; }
+
 char Component::getOrientation() { return orientation; }
+
 string Component::getWord() { return word; }
+
 string Component::getToFile() { return toFile; }
+
 void Component::setToFile()
 {
 	string str;
