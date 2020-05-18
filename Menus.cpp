@@ -1,5 +1,8 @@
 #include "Menus.h"
 
+/*
+This function welcomes the user to the program
+*/
 void Introduction()
 {
     cout << "\n\t\tWelcome to Board Builder!\n\n\n";
@@ -7,6 +10,9 @@ void Introduction()
     _getch(); clrscr();
 }
 
+/*
+This function gets information on the dimension wanted for the board (lines and columns)
+*/
 void Dimension(Board* board)
 {
     while (true)
@@ -85,6 +91,9 @@ void Dimension(Board* board)
     board->addStrBoardFile(str);
 }
 
+/*
+This function writes to the file "BOARD.txt" the board itself
+*/
 void Quit(Board* board)
 {
     ofstream boardFile;

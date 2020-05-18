@@ -1,3 +1,10 @@
+/**
+  @file Utilities.h
+  @author João Marinho
+  @author Rodrigo Andrade
+  Contains utility functions
+*/
+
 #pragma once
 #define STD_OUTPUT_HANDLE ((DWORD)-11)
 #include <fstream>
@@ -8,11 +15,20 @@
 
 using namespace std;
 
-//Clear screen function
+/**
+  @brief Clears the console screen output
+*/
 void clrscr();
 
-//Set color function
+/**
+  @brief Changes the text color
+  @param color int to be changed to
+*/
 void setcolor(unsigned int color);
 
-//Check if the word is in the dictionary
+/**
+  @brief Verifies if a certain word belongs to the dictionary
+  @param word String to be validated
+  @return True if string belongs to the dictionary
+*/
 bool inDict(string word);

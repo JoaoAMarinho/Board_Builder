@@ -1,5 +1,9 @@
 #include "Utilities.h"
 
+
+/*
+ This function clears the screen of the console
+ */
 void clrscr()
 {
     COORD coordScreen = { 0, 0 }; // upper left corner
@@ -15,12 +19,20 @@ void clrscr()
     SetConsoleCursorPosition(hCon, coordScreen);
 }
 
+/*
+ Changes the text and the background color of the console
+ parameter color - color to be changed
+ */
 void setcolor(unsigned int color)
 {
     HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hcon, color);
 }
 
+/*
+ This function checks if a word belongs to the dictionary
+ parameter word - string to be verified if exists in the dictionary
+ */
 bool inDict(string word) {
     ifstream dict;
     bool exists = false;

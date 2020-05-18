@@ -8,18 +8,18 @@ using namespace std;
 int main()
 {
     Board board;
-    Introduction();                              //Inicial function
-    Dimension(&board);                           //Set the dimension of the board
-    board.Draw();                                       
-    Component componentObject;                   //Create a default component to be added to the board
-    Component* component = &componentObject;     //Create a pointer to the component object
-    while (board.addWords(component))            //Add words to the board
+    Introduction(); 
+    Dimension(&board);          
+    board.Draw();
+    Component componentObject;            
+    Component* component = &componentObject;
+    while (board.addWords(component))     
     {
-        if (board.fitsInBoard(component))        //Tests to know if the input word can be inserted in the board
+        if (board.fitsInBoard(component))  
         {
             if (board.sameChar(component))
             {
-                if (board.rightInsertion(component))     //In case all the tests have been passed, then the word will be added to the board
+                if (board.rightInsertion(component))
                 {
                     cout << "The word was inserted with success.\n\n";
                     board.addStrBoardFile(component->getToFile());
@@ -40,7 +40,6 @@ int main()
         }
         board.Draw();
     }
-    Quit(&board);                         //End function that writes to the file the board
-    cout << "\nBye\n";
+    Quit(&board);
     return 0;
 }

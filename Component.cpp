@@ -12,15 +12,15 @@ void Component::setWord(string word) { this->word = word; }
 
 void Component::setToFile(string toFile) { this->toFile = toFile; }
 
-int Component::getLine() { return line; }
+int Component::getLine()const { return line; }
 
-int Component::getColumn() { return column; }
+int Component::getColumn()const { return column; }
 
-char Component::getOrientation() { return orientation; }
+char Component::getOrientation()const { return orientation; }
 
-string Component::getWord() { return word; }
+string Component::getWord()const { return word; }
 
-string Component::getToFile() { return toFile; }
+string Component::getToFile()const { return toFile; }
 
 void Component::setToFile()
 {

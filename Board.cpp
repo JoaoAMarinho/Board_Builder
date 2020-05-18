@@ -1,8 +1,13 @@
 #include "Board.h"
 
-Board::Board() { lines = 0; columns = 0; setBoardSize();}
-
-Board::Board(int lines, int columns) { this->lines = lines; this->columns = columns; setBoardSize(); }
+/*
+ Constructor
+ */
+Board::Board() { 
+    lines = 0;
+    columns = 0;
+    setBoardSize();
+}
 
 void Board::setLines(int lines){ this->lines = lines; }
 
@@ -10,18 +15,22 @@ void Board::setColumns(int columns){ this->columns = columns; }
 
 void Board::setBoardSize() { vector<vector<char>> v(lines, vector<char>(columns, ' ')); board = v; }
 
+
+int Board::getLines()const { return lines; }
+
+int Board::getColumns()const { return columns; }
+
+string Board::getBoardFile()const { return board_file; }
+
+vector<vector<char>> Board::getBoard()const { return board; }
+
 void Board::addStrBoardFile(string str) { board_file += str + '\n'; }
-
-int Board::getLines() { return lines; }
-
-int Board::getColumns() { return columns; }
-
-string Board::getBoardFile() { return board_file; }
-
-vector<vector<char>> Board::getBoard() { return board; }
 
 void Board::addCharToBoard(int line, int column, char character) { board[line][column] = character; }
 
+/*
+ Prints the board
+ */
 void Board::Draw() {
     setcolor(112);                             //Set the background colour to white just to differenciate the board and the limits
     cout << " ";
@@ -44,6 +53,11 @@ void Board::Draw() {
     }
 }
 
+/*
+ *Checks if the user wants to insert any more words in the board
+ *parameter: component - From class component, saves the information inputed by the user
+ *Returns true if the user wants to add a word
+ */
 bool Board::addWords(Component* component) {
     bool validInput = true;
     while (true)
@@ -142,6 +156,11 @@ bool Board::addWords(Component* component) {
 
 }
 
+/*
+ *Checks if the word inputed will fit in the limits of the board
+ *parameter: component - From class component, used to access the information inputed by the user
+ *Returns true if the word is in range of the limits of the board
+ */
 bool Board::fitsInBoard(Component* component)
 {
     if (component->getOrientation() == 'H')
@@ -169,6 +188,11 @@ bool Board::fitsInBoard(Component* component)
 
 }
 
+/*
+ *Checks if the characters in the board coincide or if they do not differ from the ones in the word so that it can be placed
+ *parameter: component - From class component, used to access the information inputed by the user
+ *Returns true if the word has no problems with the position it is going to occupy (in terms of characters)
+ */
 bool Board::sameChar(Component* component)
 {
     if (component->getOrientation() == 'H')
@@ -210,6 +234,11 @@ bool Board::sameChar(Component* component)
     return true;
 }
 
+/*
+ *Checks if the word will not destroy exixting ones in the board, and/or if it creats new ones by adding it
+ *parameter: component - From class component, used to access the information inputed by the user
+ *Returns true if the word can be placed with success
+ */
 bool Board::rightInsertion(Component* component)
 {
     if (component->getOrientation() == 'H')
